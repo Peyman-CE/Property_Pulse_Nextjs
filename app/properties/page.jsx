@@ -1,8 +1,4 @@
 import PropertyCard from '@/components/PropertyCard';
-import PropertySearchForm from '@/components/PropertySearchForm';
-import Pagination from '@/components/Pagination';
-import Property from '@/models/Property';
-import connectDB from '@/config/database';
 
 const PropertiesPage = async ({ searchParams: { pageSize = 9, page = 1 } }) => {
   await connectDB();
