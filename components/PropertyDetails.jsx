@@ -6,7 +6,7 @@ import {
   FaCheck,
   FaMapMarker,
 } from 'react-icons/fa';
-import PropertyMap from '@/components/PropertyMap';
+// import PropertyMap from '@/components/PropertyMap';
 
 const PropertyDetails = ({ property }) => {
   return (
@@ -26,7 +26,8 @@ const PropertyDetails = ({ property }) => {
           Rates & Options
         </h3>
         <div className='flex flex-col md:flex-row justify-around'>
-          <div className='flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0'>
+          {/* Nightly – no bottom border */}
+          <div className='flex items-center justify-center mb-4 pb-4 md:pb-0'>
             <div className='text-gray-500 mr-2 font-bold'>Nightly</div>
             <div className='text-2xl font-bold text-blue-500'>
               {property.rates.nightly ? (
@@ -36,7 +37,9 @@ const PropertyDetails = ({ property }) => {
               )}
             </div>
           </div>
-          <div className='flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0'>
+
+          {/* Weekly – no bottom border */}
+          <div className='flex items-center justify-center mb-4 pb-4 md:pb-0'>
             <div className='text-gray-500 mr-2 font-bold'>Weekly</div>
             <div className='text-2xl font-bold text-blue-500'>
               {property.rates.weekly ? (
@@ -46,6 +49,8 @@ const PropertyDetails = ({ property }) => {
               )}
             </div>
           </div>
+
+          {/* Monthly – already had no border */}
           <div className='flex items-center justify-center mb-4 pb-4 md:pb-0'>
             <div className='text-gray-500 mr-2 font-bold'>Monthly</div>
             <div className='text-2xl font-bold text-blue-500'>
@@ -81,7 +86,6 @@ const PropertyDetails = ({ property }) => {
 
       <div className='bg-white p-6 rounded-lg shadow-md mt-6'>
         <h3 className='text-lg font-bold mb-6'>Amenities</h3>
-
         <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 list-none space-y-2'>
           {property.amenities.map((amenity, index) => (
             <li key={index}>
@@ -90,8 +94,10 @@ const PropertyDetails = ({ property }) => {
           ))}
         </ul>
       </div>
+
+      {/* PropertyMap temporarily disabled */}
       <div className='bg-white p-6 rounded-lg shadow-md mt-6'>
-        <PropertyMap property={property} />
+        {/* <PropertyMap property={property} /> */}
       </div>
     </main>
   );

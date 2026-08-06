@@ -2,18 +2,18 @@ import PropertyHeaderImage from '@/components/PropertyHeaderImage';
 import PropertyDetails from '@/components/PropertyDetails';
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
-import PropertyImages from '@/components/PropertyImages';
-import BookmarkButton from '@/components/BookmarkButton';
-import ShareButtons from '@/components/ShareButtons';
-import PropertyContactForm from '@/components/PropertyContactForm';
-import { convertToSerializeableObject } from '@/utils/convertToObject';
+// import PropertyImages from '@/components/PropertyImages';
+// import BookmarkButton from '@/components/BookmarkButton';
+// import ShareButtons from '@/components/ShareButtons';
+// import PropertyContactForm from '@/components/PropertyContactForm';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
 const PropertyPage = async ({ params }) => {
+  const { id } = await params;       
   await connectDB();
-  const propertyDoc = await Property.findById(params.id).lean();
-  const property = convertToSerializeableObject(propertyDoc);
+  const propertyDoc = await Property.findById(id).lean();
+  const property = JSON.parse(JSON.stringify(propertyDoc));
 
   if (!property) {
     return (
@@ -41,17 +41,17 @@ const PropertyPage = async ({ params }) => {
           <div className='grid grid-cols-1 md:grid-cols-[70%_28%] w-full gap-6'>
             <PropertyDetails property={property} />
 
-            {/* <!-- Sidebar --> */}
             <aside className='space-y-4'>
-              <BookmarkButton property={property} />
-              <ShareButtons property={property} />
-              <PropertyContactForm property={property} />
+              {/* <BookmarkButton property={property} /> */}
+              {/* <ShareButtons property={property} /> */}
+              {/* <PropertyContactForm property={property} /> */}
             </aside>
           </div>
         </div>
       </section>
-      <PropertyImages images={property.images} />
+      {/* <PropertyImages images={property.images} /> */}
     </>
   );
 };
+
 export default PropertyPage;
