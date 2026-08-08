@@ -18,7 +18,7 @@ export const authOptions = {
   ],
   callbacks: {
     //Invodke when user sign in
-    async sighIn({ profile }) {
+    async signIn({ profile }) {
       await connectDB();
       const userExists = await User.findOne({ email: profile.email });
 
