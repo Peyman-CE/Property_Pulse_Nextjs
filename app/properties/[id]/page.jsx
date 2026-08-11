@@ -2,7 +2,7 @@ import PropertyHeaderImage from '@/components/PropertyHeaderImage';
 import PropertyDetails from '@/components/PropertyDetails';
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
-// import PropertyImages from '@/components/PropertyImages';
+import PropertyImages from '@/components/PropertyImages';
 // import BookmarkButton from '@/components/BookmarkButton';
 // import ShareButtons from '@/components/ShareButtons';
 // import PropertyContactForm from '@/components/PropertyContactForm';
@@ -49,7 +49,7 @@ const PropertyPage = async ({ params }) => {
           </div>
         </div>
       </section>
-      {/* <PropertyImages images={property.images} /> */}
+      <PropertyImages images={property.images} />
     </>
   );
 };

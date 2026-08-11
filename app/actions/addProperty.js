@@ -39,7 +39,7 @@ async function addProperty(formData) {
     rates: {
       weekly: formData.get('rates.weekly'),
       monthly: formData.get('rates.monthly'),
-      nightly: formData.get('rates.nightly.'),
+      nightly: formData.get('rates.nightly'), // fixed trailing dot
     },
     seller_info: {
       name: formData.get('seller_info.name'),
@@ -49,26 +49,23 @@ async function addProperty(formData) {
     owner: userId,
   };
 
-  const imageUrls = [];
+  // Upload all images in parallel
+  const uploadPromises = images.map(async (imageFile) => {
+    // Convert file to base64 string
+    const arrayBuffer = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const base64 = buffer.toString('base64');
+    // Use the file's actual MIME type (e.g., image/jpeg)
+    const dataUri = `data:${imageFile.type};base64,${base64}`;
 
-  for (const imageFile of images) {
-    const imageBuffer = await imageFile.arrayBuffer();
-    const imageArray = Array.from(new Uint8Array(imageBuffer));
-    const imageData = Buffer.from(imageArray);
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(dataUri, {
+      folder: 'propertypulse',
+    });
+    return result.secure_url;
+  });
 
-    // Convert the image data to base64
-    const imageBase64 = imageData.toString('base64');
-
-    // Make request to upload to Cloudinary
-    const result = await cloudinary.uploader.upload(
-      `data:image/png;base64,${imageBase64}`,
-      {
-        folder: 'propertypulse',
-      }
-    );
-
-    imageUrls.push(result.secure_url);
-  }
+  const imageUrls = await Promise.all(uploadPromises);
 
   propertyData.images = imageUrls;
 
