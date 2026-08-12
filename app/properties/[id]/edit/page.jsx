@@ -4,9 +4,12 @@ import Property from '@/models/Property';
 import { convertToSerializeableObject } from '@/utils/convertToObject';
 
 const PropertyEditPage = async ({ params }) => {
+  // ✅ Await params before accessing its properties
+  const { id } = await params;
+
   await connectDB();
 
-  const propertyDoc = await Property.findById(params.id).lean();
+  const propertyDoc = await Property.findById(id).lean();
   const property = convertToSerializeableObject(propertyDoc);
 
   if (!property) {
