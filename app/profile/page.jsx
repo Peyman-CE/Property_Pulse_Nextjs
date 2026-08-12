@@ -4,24 +4,31 @@ import Property from "@/models/Property";
 import { getSessionUser } from "@/utils/getSessionUser";
 import profileDefault from "@/assets/images/profile.png";
 import ProfileProperties from "@/components/ProfileProperties";
+import { convertToSerializeableObject } from "@/utils/convertToObject";
 
 const ProfilePage = async () => {
   await connectDB();
 
   const sessionUser = await getSessionUser();
-
   const { userId } = sessionUser;
 
   if (!userId) {
     throw new Error("User ID is required");
   }
 
-  const properties = await Property.find({ owner: userId }).lean();
-  const serializedProperties = properties.map((property) => ({
-    ...property,
-    _id: property._id.toString(),
-    owner: property.owner.toString(),
-  }));
+  const propertiesDocs = await Property.find({ owner: userId }).lean();
+  const properties = propertiesDocs.map((property) =>
+    convertToSerializeableObject(property)
+  );
+
+  // Check if no properties exist
+  if (!properties || properties.length === 0) {
+    return (
+      <h1 className="text-center text-2xl font-bold mt-10">
+        No properties found
+      </h1>
+    );
+  }
 
   return (
     <section className="bg-blue-50">
@@ -39,20 +46,19 @@ const ProfilePage = async () => {
                   alt="User"
                 />
               </div>
-
               <h2 className="text-2xl mb-4">
-                <span className="font-bold block">Name: </span>{" "}
+                <span className="font-bold block">Name: </span>
                 {sessionUser.user.name}
               </h2>
               <h2 className="text-2xl">
-                <span className="font-bold block">Email: </span>{" "}
+                <span className="font-bold block">Email: </span>
                 {sessionUser.user.email}
               </h2>
             </div>
 
             <div className="md:w-3/4 md:pl-4">
               <h2 className="text-xl font-semibold mb-4">Your Listings</h2>
-              <ProfileProperties properties={serializedProperties} />
+              <ProfileProperties properties={properties} />
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import PropertyImages from '@/components/PropertyImages';
 // import BookmarkButton from '@/components/BookmarkButton';
 // import ShareButtons from '@/components/ShareButtons';
 // import PropertyContactForm from '@/components/PropertyContactForm';
+import { convertToSerializeableObject } from '@/utils/convertToObject';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -13,7 +14,7 @@ const PropertyPage = async ({ params }) => {
   const { id } = await params;       
   await connectDB();
   const propertyDoc = await Property.findById(id).lean();
-  const property = JSON.parse(JSON.stringify(propertyDoc));
+  const property = convertToSerializeableObject(propertyDoc);
 
   if (!property) {
     return (
