@@ -10,6 +10,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.3.1",
     "cloudinary": "^2.10.0",
+    "mapbox-gl": "^3.28.1",
     "mongodb": "^7.5.0",
     "mongoose": "^9.9.1",
     "next": "16.2.12",
@@ -17,7 +18,9 @@
     "next-cloudinary": "^6.18.8",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-geocode": "^2.0.1",
     "react-icons": "^5.7.0",
+    "react-map-gl": "^8.1.2",
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.1.0"
   },
