@@ -6,9 +6,10 @@ import connectDB from '@/config/database';
 import Property from '@/models/Property';
 import { convertToSerializeableObject } from '@/utils/convertToObject';
 
-const SearchResultsPage = async ({
-  searchParams: { location, propertyType },
-}) => {
+const SearchResultsPage = async ({ searchParams }) => {
+  // ✅ Await searchParams and destructure with defaults
+  const { location = '', propertyType = 'All' } = await searchParams;
+
   await connectDB();
 
   const locationPattern = new RegExp(location, 'i');
@@ -25,7 +26,7 @@ const SearchResultsPage = async ({
     ],
   };
 
-  // Only check for property if its not 'All'
+  // Only check for property type if it's not 'All'
   if (propertyType && propertyType !== 'All') {
     const typePattern = new RegExp(propertyType, 'i');
     query.type = typePattern;
@@ -64,4 +65,5 @@ const SearchResultsPage = async ({
     </>
   );
 };
+
 export default SearchResultsPage;
