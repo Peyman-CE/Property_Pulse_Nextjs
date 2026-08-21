@@ -1,6 +1,6 @@
 import PropertyCard from '@/components/PropertyCard';
 // import PropertySearchForm from '@/components/PropertySearchForm';  // TODO: create this component
-// import Pagination from '@/components/Pagination';                // TODO: create this component
+import Pagination from '@/components/Pagination';                // TODO: create this component
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
 
@@ -36,12 +36,12 @@ const PropertiesPage = async ({ searchParams }) => {
             </div>
           )}
           {showPagination && (
-            // <Pagination
-            //   page={parseInt(page)}
-            //   pageSize={parseInt(pageSize)}
-            //   totalItems={total}
-            // />
-            <p className='text-gray-600'>📄 Pagination placeholder</p>
+            <Pagination
+              page={parseInt(page)}
+              pageSize={parseInt(pageSize)}
+              totalItems={total}
+            />
+            // <p className='text-gray-600'>📄 Pagination placeholder</p>
           )}
         </div>
       </section>
